@@ -23,50 +23,50 @@ TensorMechanicsPlasticIsotropicSD::TensorMechanicsPlasticIsotropicSD(const Input
   _c(getParam<Real>("c")),
   _associative(getParam<bool>("associative"))
 {
-  _a = 1.0/(_b+std::pow(1.0/std::sqrt(27) - _c/27,1.0/3.));
+  _a = 1.0/(_b + std::pow(1.0 / std::sqrt(27) - _c / 27,1.0 / 3.));
   for (unsigned i = 0; i < 3; i++)
     for (unsigned j = 0; j < 3; j++)
       for (unsigned k = 0; k < 3; k++)
         for (unsigned l = 0; l < 3; l++)
-          _h(i,j,k,l) = ((i == k)*(j == l) - 1.0/3*(i == j)*(k == l));
+          _h(i,j,k,l) = ((i == k) * (j == l) - 1.0 / 3 * (i == j) * (k == l));
 }
 
 Real
 TensorMechanicsPlasticIsotropicSD::dphi_dj2(const Real j2, const Real j3) const
 {
-  return std::pow(j2,1.0/2) / (2*std::pow(std::pow(j2,3.0/2)-_c*j3,2.0/3));
+  return std::pow(j2,1.0 / 2) / (2 * std::pow(std::pow(j2,3.0 / 2) - _c * j3,2.0 / 3));
 }
 
 Real
 TensorMechanicsPlasticIsotropicSD::dphi_dj3(const Real j2, const Real j3) const
 {
-  return -_c/(3*std::pow(std::pow(j2,3.0/2)-_c*j3,2.0/3));
+  return - _c / (3 * std::pow(std::pow(j2,3.0 / 2) - _c * j3,2.0 / 3));
 }
 
 Real
 TensorMechanicsPlasticIsotropicSD::dfj2_dj2(const Real j2, const Real j3) const
 {
-  return std::pow(j2,-1.0/2) / (4*std::pow(std::pow(j2,3.0/2)-_c*j3,2.0/3))
-  - j2 / (2*std::pow(std::pow(j2,3.0/2)-_c*j3,5.0/3));
+  return std::pow(j2,-1.0 / 2) / (4 * std::pow(std::pow(j2,3.0 / 2) - _c * j3,2.0 / 3))
+  - j2 / (2 * std::pow(std::pow(j2,3.0 / 2) - _c * j3,5.0 / 3));
 }
 
 Real
 TensorMechanicsPlasticIsotropicSD::dfj2_dj3(const Real j2, const Real j3) const
 {
-  return _c * std::pow(j2,1.0/2) / (3*std::pow(std::pow(j2,3.0/2)-_c*j3,5.0/3));
+  return _c * std::pow(j2,1.0 / 2) / (3 * std::pow(std::pow(j2,3.0 / 2) - _c * j3,5.0 / 3));
 }
 
 Real
 TensorMechanicsPlasticIsotropicSD::dfj3_dj2(const Real j2, const Real j3) const
 {
-  return _c * std::pow(j2,1.0/2) / (3*std::pow(std::pow(j2,3.0/2)-_c*j3,5.0/3));
+  return _c * std::pow(j2,1.0 / 2) / (3 * std::pow(std::pow(j2,3.0 / 2) - _c * j3,5.0 / 3));
 }
 
 Real
 TensorMechanicsPlasticIsotropicSD::dfj3_dj3(const Real j2, const Real j3) const
 {
   return -_c * _c * 2.0
-  / (9*std::pow(std::pow(j2,3.0/2)-_c*j3,5.0/3));
+  / (9 * std::pow(std::pow(j2,3.0 / 2) - _c * j3,5.0 / 3));
 }
 
 RankTwoTensor
@@ -83,8 +83,8 @@ TensorMechanicsPlasticIsotropicSD::dj2_dSkl(const RankTwoTensor & stress) const
   Real trace = stress.trace();
   for (unsigned i = 0; i < 3; i++)
     for (unsigned j = 0; j < 3; j++)
-      a(i, j) = (trace - stress(i, j))*-1*(i == j)
-       + stress(i, j)*(i != j);
+      a(i, j) = (trace - stress(i, j)) * -1 * (i == j)
+       + stress(i, j) * (i != j);
 
   return a;
 }
@@ -93,7 +93,7 @@ Real
 TensorMechanicsPlasticIsotropicSD::yieldFunction(const RankTwoTensor & stress, Real intnl) const
 {
   return _a * (_b * stress.trace()
-  + std::pow(std::pow(stress.secondInvariant(),1.5) - _c * stress.thirdInvariant(),1.0/3))
+  + std::pow(std::pow(stress.secondInvariant(),1.5) - _c * stress.thirdInvariant(),1.0 / 3))
   - yieldStrength(intnl);
 }
 
@@ -118,7 +118,8 @@ TensorMechanicsPlasticIsotropicSD::dflowPotential_dstress(const RankTwoTensor & 
   RankTwoTensor dj3 = sDev.ddet();
   Real j2 = stress.secondInvariant();
   Real j3 = stress.thirdInvariant();
-  return _a * (dfj2_dj2(j2,j3) * _h.innerProductTranspose(dj2).outerProduct(_h.innerProductTranspose(dj2))
+  return _a
+  * (dfj2_dj2(j2,j3) * _h.innerProductTranspose(dj2).outerProduct(_h.innerProductTranspose(dj2))
   + dfj2_dj3(j2,j3) * _h.innerProductTranspose(dj2).outerProduct(_h.innerProductTranspose(dj3))
   + dfj3_dj2(j2,j3) * _h.innerProductTranspose(dj3).outerProduct(_h.innerProductTranspose(dj2))
   + dfj3_dj3(j2,j3) * _h.innerProductTranspose(dj3).outerProduct(_h.innerProductTranspose(dj3)));

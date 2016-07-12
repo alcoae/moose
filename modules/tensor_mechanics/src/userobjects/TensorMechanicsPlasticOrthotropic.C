@@ -21,51 +21,50 @@ TensorMechanicsPlasticOrthotropic::TensorMechanicsPlasticOrthotropic(const Input
   _c1(getParam<std::vector<Real>>("c1")),
   _c2(getParam<std::vector<Real>>("c2"))
 {
-  _a = 1.0; //std::pow(3.0,1.0/2);
   _c = 1.0;
-  _l1(0,0,0,0) = (_c1[1]+_c1[2])/3.0;
-  _l1(0,0,1,1) = -_c1[2]/3.0;
-  _l1(0,0,2,2) = -_c1[1]/3.0;
-  _l1(1,1,0,0) = -_c1[2]/3.0;
-  _l1(1,1,1,1) = (_c1[0]+_c1[2])/3.0;
-  _l1(1,1,2,2) = -_c1[0]/3.0;
-  _l1(2,2,0,0) = -_c1[1]/3.0;
-  _l1(2,2,1,1) = -_c1[0]/3.0;
-  _l1(2,2,2,2) = (_c1[0]+_c1[1])/3.0;
-  _l1(0,1,1,0) = _c1[5]/2.0;
-  _l1(0,1,0,1) = _c1[5]/2.0;
-  _l1(1,0,1,0) = _c1[5]/2.0;
-  _l1(1,0,0,1) = _c1[5]/2.0;
-  _l1(0,2,0,2) = _c1[4]/2.0;
-  _l1(0,2,2,0) = _c1[4]/2.0;
-  _l1(2,0,2,0) = _c1[4]/2.0;
-  _l1(2,0,0,2) = _c1[4]/2.0;
-  _l1(1,2,2,1) = _c1[3]/2.0;
-  _l1(1,2,1,2) = _c1[3]/2.0;
-  _l1(2,1,1,2) = _c1[3]/2.0;
-  _l1(2,1,2,1) = _c1[3]/2.0;
+  _l1(0,0,0,0) = (_c1[1] + _c1[2]) / 3.0;
+  _l1(0,0,1,1) = - _c1[2] / 3.0;
+  _l1(0,0,2,2) = - _c1[1] / 3.0;
+  _l1(1,1,0,0) = - _c1[2] / 3.0;
+  _l1(1,1,1,1) = (_c1[0] + _c1[2]) / 3.0;
+  _l1(1,1,2,2) = - _c1[0] / 3.0;
+  _l1(2,2,0,0) = - _c1[1] / 3.0;
+  _l1(2,2,1,1) = - _c1[0] / 3.0;
+  _l1(2,2,2,2) = (_c1[0] + _c1[1]) / 3.0;
+  _l1(0,1,1,0) = _c1[5] / 2.0;
+  _l1(0,1,0,1) = _c1[5] / 2.0;
+  _l1(1,0,1,0) = _c1[5] / 2.0;
+  _l1(1,0,0,1) = _c1[5] / 2.0;
+  _l1(0,2,0,2) = _c1[4] / 2.0;
+  _l1(0,2,2,0) = _c1[4] / 2.0;
+  _l1(2,0,2,0) = _c1[4] / 2.0;
+  _l1(2,0,0,2) = _c1[4] / 2.0;
+  _l1(1,2,2,1) = _c1[3] / 2.0;
+  _l1(1,2,1,2) = _c1[3] / 2.0;
+  _l1(2,1,1,2) = _c1[3] / 2.0;
+  _l1(2,1,2,1) = _c1[3] / 2.0;
 
-  _l2(0,0,0,0) = (_c2[1]+_c2[2])/3.0;
-  _l2(0,0,1,1) = -_c2[2]/3.0;
-  _l2(0,0,2,2) = -_c2[1]/3.0;
-  _l2(1,1,0,0) = -_c2[2]/3.0;
-  _l2(1,1,1,1) = (_c2[0]+_c2[2])/3.0;
-  _l2(1,1,2,2) = -_c2[0]/3.0;
-  _l2(2,2,0,0) = -_c2[1]/3.0;
-  _l2(2,2,1,1) = -_c2[0]/3.0;
-  _l2(2,2,2,2) = (_c2[0]+_c2[1])/3.0;
-  _l2(0,1,1,0) = _c2[5]/2.0;
-  _l2(0,1,0,1) = _c2[5]/2.0;
-  _l2(1,0,1,0) = _c2[5]/2.0;
-  _l2(1,0,0,1) = _c2[5]/2.0;
-  _l2(0,2,0,2) = _c2[4]/2.0;
-  _l2(0,2,2,0) = _c2[4]/2.0;
-  _l2(2,0,2,0) = _c2[4]/2.0;
-  _l2(2,0,0,2) = _c2[4]/2.0;
-  _l2(1,2,2,1) = _c2[3]/2.0;
-  _l2(1,2,1,2) = _c2[3]/2.0;
-  _l2(2,1,1,2) = _c2[3]/2.0;
-  _l2(2,1,2,1) = _c2[3]/2.0;
+  _l2(0,0,0,0) = (_c2[1] + _c2[2]) / 3.0;
+  _l2(0,0,1,1) = - _c2[2] / 3.0;
+  _l2(0,0,2,2) = - _c2[1] / 3.0;
+  _l2(1,1,0,0) = - _c2[2] / 3.0;
+  _l2(1,1,1,1) = (_c2[0] + _c2[2]) / 3.0;
+  _l2(1,1,2,2) = - _c2[0] / 3.0;
+  _l2(2,2,0,0) = - _c2[1] / 3.0;
+  _l2(2,2,1,1) = - _c2[0] / 3.0;
+  _l2(2,2,2,2) = (_c2[0] + _c2[1]) / 3.0;
+  _l2(0,1,1,0) = _c2[5] / 2.0;
+  _l2(0,1,0,1) = _c2[5] / 2.0;
+  _l2(1,0,1,0) = _c2[5] / 2.0;
+  _l2(1,0,0,1) = _c2[5] / 2.0;
+  _l2(0,2,0,2) = _c2[4] / 2.0;
+  _l2(0,2,2,0) = _c2[4] / 2.0;
+  _l2(2,0,2,0) = _c2[4] / 2.0;
+  _l2(2,0,0,2) = _c2[4] / 2.0;
+  _l2(1,2,2,1) = _c2[3] / 2.0;
+  _l2(1,2,1,2) = _c2[3] / 2.0;
+  _l2(2,1,1,2) = _c2[3] / 2.0;
+  _l2(2,1,2,1) = _c2[3] / 2.0;
 }
 
 Real
@@ -73,8 +72,8 @@ TensorMechanicsPlasticOrthotropic::yieldFunction(const RankTwoTensor & stress, R
 {
   RankTwoTensor j2prime = _l1 * stress;
   RankTwoTensor j3prime = _l2 * stress;
-  return _a*(_b * stress.trace() + std::pow(std::pow(-j2prime.generalSecondInvariant(),3/2.0)
-  - j3prime.det(),1.0/3)) - yieldStrength(intnl);
+  return _b * stress.trace() + std::pow(std::pow(-j2prime.generalSecondInvariant(),3 / 2.0)
+  - j3prime.det(),1.0 / 3) - yieldStrength(intnl);
 }
 
 RankTwoTensor
@@ -84,9 +83,10 @@ TensorMechanicsPlasticOrthotropic::dyieldFunction_dstress(const RankTwoTensor & 
   RankTwoTensor j3prime = _l2 * stress;
   Real j2 = -j2prime.generalSecondInvariant();
   Real j3 = j3prime.det();
-  return _a * (_b * dI_sigma()
+  RankTwoTensor a = _b * dI_sigma()
   + dphi_dj2(j2,j3) * _l1.innerProductTranspose(dj2_dSkl(j2prime))
-  + dphi_dj3(j2,j3) * _l2.innerProductTranspose(j3prime.ddet()));
+  + dphi_dj3(j2,j3) * _l2.innerProductTranspose(j3prime.ddet());
+  return a;//a.L2norm();
 }
 
 RankFourTensor
@@ -96,14 +96,22 @@ TensorMechanicsPlasticOrthotropic::dflowPotential_dstress(const RankTwoTensor & 
   {
   RankTwoTensor j2prime = _l1 * stress;
   RankTwoTensor j3prime = _l2 * stress;
-  RankTwoTensor dj2_ds = dj2_dSkl(j2prime);
-  RankTwoTensor dj3_dSkl = j3prime.ddet();
+  RankTwoTensor dj2 = dj2_dSkl(j2prime);
+  RankTwoTensor dj3 = j3prime.ddet();
   Real j2 = -j2prime.generalSecondInvariant();
   Real j3 = j3prime.det();
-  return _a * (dfj2_dj2(j2,j3) * _l1.innerProductTranspose(dj2_ds).outerProduct(_l1.innerProductTranspose(dj2_ds))
-  + dfj2_dj3(j2,j3) * _l1.innerProductTranspose(dj2_ds).outerProduct(_l2.innerProductTranspose(dj3_dSkl))
-  + dfj3_dj2(j2,j3) * _l2.innerProductTranspose(dj3_dSkl).outerProduct(_l1.innerProductTranspose(dj2_ds))
-  + dfj3_dj3(j2,j3) * _l2.innerProductTranspose(dj3_dSkl).outerProduct(_l2.innerProductTranspose(dj3_dSkl)));
+  //dj2.print(Moose::out);
+  //Moose::out << "j2 normal\n";
+  //dj2_dSkl(stress.deviatoric()).print(Moose::out);
+  //Moose::out << "j3 prime\n";
+  //dj3.print(Moose::out);
+  //Moose::out << "j3 normal\n";
+  //stress.deviatoric().ddet().print(Moose::out);
+  //Moose::out << "j2 prime\n";
+  return dfj2_dj2(j2,j3) * _l1.innerProductTranspose(dj2).outerProduct(_l1.innerProductTranspose(dj2))
+  + dfj2_dj3(j2,j3) * _l1.innerProductTranspose(dj2).outerProduct(_l2.innerProductTranspose(dj3))
+  + dfj3_dj2(j2,j3) * _l2.innerProductTranspose(dj3).outerProduct(_l1.innerProductTranspose(dj2))
+  + dfj3_dj3(j2,j3) * _l2.innerProductTranspose(dj3).outerProduct(_l2.innerProductTranspose(dj3));
   }
   else
     return TensorMechanicsPlasticJ2::dflowPotential_dstress(stress, 0);

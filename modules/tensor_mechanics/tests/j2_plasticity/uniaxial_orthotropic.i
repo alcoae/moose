@@ -231,7 +231,8 @@
   [./Orthotropic]
     type = TensorMechanicsPlasticOrthotropic
     b = 0
-    c1 = '1 1 1 1 1 1'
+    #c1 = '1 1 1 1 1 1'
+    c1 = '1.732 1.732 1.732 1.732 1.732 1.732'
     c2 = '0 0 0 0 0 0'
     associative = true
     yield_strength = str
@@ -266,7 +267,7 @@
 
 
 [Executioner]
-  num_steps = 4
+  num_steps = 8
   dt = .05
   type = Transient
 
