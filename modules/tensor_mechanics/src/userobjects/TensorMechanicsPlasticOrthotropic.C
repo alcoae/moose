@@ -83,10 +83,9 @@ TensorMechanicsPlasticOrthotropic::dyieldFunction_dstress(const RankTwoTensor & 
   RankTwoTensor j3prime = _l2 * stress;
   Real j2 = -j2prime.generalSecondInvariant();
   Real j3 = j3prime.det();
-  RankTwoTensor a = _b * dI_sigma()
+  return _b * dI_sigma()
   + dphi_dj2(j2,j3) * _l1.innerProductTranspose(dj2_dSkl(j2prime))
   + dphi_dj3(j2,j3) * _l2.innerProductTranspose(j3prime.ddet());
-  return a;//a.L2norm();
 }
 
 RankFourTensor
@@ -100,18 +99,16 @@ TensorMechanicsPlasticOrthotropic::dflowPotential_dstress(const RankTwoTensor & 
   RankTwoTensor dj3 = j3prime.ddet();
   Real j2 = -j2prime.generalSecondInvariant();
   Real j3 = j3prime.det();
-  //dj2.print(Moose::out);
-  //Moose::out << "j2 normal\n";
-  //dj2_dSkl(stress.deviatoric()).print(Moose::out);
-  //Moose::out << "j3 prime\n";
-  //dj3.print(Moose::out);
-  //Moose::out << "j3 normal\n";
-  //stress.deviatoric().ddet().print(Moose::out);
-  //Moose::out << "j2 prime\n";
-  return dfj2_dj2(j2,j3) * _l1.innerProductTranspose(dj2).outerProduct(_l1.innerProductTranspose(dj2))
+  RankFourTensor dr = dfj2_dj2(j2,j3) * _l1.innerProductTranspose(dj2).outerProduct(_l1.innerProductTranspose(dj2))
   + dfj2_dj3(j2,j3) * _l1.innerProductTranspose(dj2).outerProduct(_l2.innerProductTranspose(dj3))
   + dfj3_dj2(j2,j3) * _l2.innerProductTranspose(dj3).outerProduct(_l1.innerProductTranspose(dj2))
   + dfj3_dj3(j2,j3) * _l2.innerProductTranspose(dj3).outerProduct(_l2.innerProductTranspose(dj3));
+  RankTwoTensor r = _b * dI_sigma()
+  + dphi_dj2(j2,j3) * _l1.innerProductTranspose(dj2_dSkl(j2prime))
+  + dphi_dj3(j2,j3) * _l2.innerProductTranspose(j3prime.ddet());
+  Real norm = r.L2norm();
+  RankFourTensor a = dr / norm - (r / std::pow(norm,3)).outerProduct(dr.innerProductTranspose(r));
+  return a/a.L2norm();
   }
   else
     return TensorMechanicsPlasticJ2::dflowPotential_dstress(stress, 0);
@@ -122,7 +119,10 @@ TensorMechanicsPlasticOrthotropic::dflowPotential_dstress(const RankTwoTensor & 
   TensorMechanicsPlasticOrthotropic::flowPotential(const RankTwoTensor & stress, Real intnl) const
   {
     if (_associative)
-      return dyieldFunction_dstress(stress, intnl);
+    {
+      RankTwoTensor a = dyieldFunction_dstress(stress, intnl);
+      return a/a.L2norm();
+    }
     else
       return TensorMechanicsPlasticJ2::dyieldFunction_dstress(stress, intnl);
   }
